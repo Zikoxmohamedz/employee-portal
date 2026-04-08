@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>طلباتي - بوابة الموظفين</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="navbar">
+    <div class="brand">بوابة الموظفين</div>
+    <div class="nav-actions">
+      <!-- الروابط تضاف تلقائياً عبر common.js -->
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="hero">
+      <h1>قسم الطلبات والمراسلات</h1>
+      <p>يمكنك إرسال طلباتك أو استفساراتك للإدارة ومتابعة الردود هنا.</p>
+    </div>
+
+    <!-- Form Section -->
+    <div class="card">
+      <h2>إرسال طلب جديد</h2>
+      <div class="input-group full mt-4">
+        <label>نص الطلب أو الرسالة</label>
+        <textarea id="requestMessage" placeholder="اكتب تفاصيل طلبك هنا..." rows="4" style="width: 100%; padding: 1rem; border-radius: 8px; border: 1px solid #e2e8f0; font-family: inherit; font-size: 1rem;"></textarea>
+      </div>
+      <button class="btn btn-primary mt-4" id="sendRequestBtn" style="width: auto;">إرسال الطلب</button>
+      <p class="msg" id="requestStatus"></p>
+    </div>
+
+    <!-- History Section -->
+    <div class="card">
+      <h2>سجل طلباتي السابقة</h2>
+      <div class="table-wrap mt-4">
+        <table>
+          <thead>
+            <tr>
+              <th>التاريخ</th>
+              <th>الرسالة</th>
+              <th>الحالة</th>
+              <th>رد الإدارة</th>
+            </tr>
+          </thead>
+          <tbody id="requestsBody"></tbody>
+        </table>
+      </div>
+      <p class="msg" id="historyStatus"></p>
+    </div>
+  </div>
+
+  <script type="module" src="requests.js"></script>
+</body>
+</html>

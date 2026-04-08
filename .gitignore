@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+.npm/
+
+# Native projects
+# We usually keep these in Capacitor, but ignore build artifacts
+android/build/
+android/.gradle/
+android/app/build/
+ios/App/build/
+ios/App/derivedData/
+
+# IDEs
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>بياناتي - بوابة الموظفين</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+  <div class="navbar">
+    <div class="brand">بوابة الموظفين</div>
+    <div class="nav-actions">
+      <a href="salary.html" class="nav-btn">المرتبات</a>
+      <a href="admin.html" id="adminLink" class="nav-btn hidden">الإدارة</a>
+      <button class="nav-btn" id="logoutBtn">خروج</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="hero">
+      <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 2rem;">
+        <img src="https://via.placeholder.com/120" id="avatarDisplay" class="avatar-large" alt="Profile" />
+        <label for="avatarFile" class="btn btn-secondary" style="width: auto; padding: 0.5rem 1rem; font-size: 0.8rem; cursor: pointer;">تغيير الصورة</label>
+        <input type="file" id="avatarFile" accept="image/*" style="display: none;" />
+      </div>
+      <h1>بياناتي الشخصية <span id="displayEmployeeCode" class="user-id-badge">...</span></h1>
+      <p>تأكد من صحة بياناتك وارفع صورة البطاقة لمراجعة حسابك.</p>
+    </div>
+
+    <div class="grid" style="grid-template-columns: 1.5fr 1fr;">
+      <!-- Edit Section -->
+      <div class="card">
+        <h2>تعديل البيانات</h2>
+        <div class="grid mt-4">
+          <div class="input-group full">
+            <label>الاسم بالكامل</label>
+            <input type="text" id="fullName" />
+          </div>
+          <div class="input-group">
+            <label>كود الموظف</label>
+            <input type="text" id="employeeCode" disabled />
+          </div>
+          <div class="input-group">
+            <label>رقم الموبايل</label>
+            <input type="text" id="phone" />
+          </div>
+          <div class="input-group full">
+            <label>الرقم القومي</label>
+            <input type="text" id="nationalId" />
+          </div>
+          <div class="input-group full">
+            <label>صورة البطاقة / PDF</label>
+            <input type="file" id="idFile" accept=".jpg,.jpeg,.png,.pdf" />
+          </div>
+        </div>
+        <button class="btn btn-primary mt-4" id="saveBtn">حفظ التغييرات</button>
+        <p class="msg" id="profileStatus"></p>
+      </div>
+
+      <!-- Status Section -->
+      <div class="card">
+        <h2>حالة الحساب</h2>
+        <div class="mt-4 text-center">
+          <div id="verifyState" class="tag" style="font-size: 1rem; padding: 0.75rem 1.5rem;">قيد المراجعة</div>
+          <p class="text-muted mt-4">لو غيرت بياناتك الأساسية، سيحتاج المدير لمراجعتها مرة أخرى لإعادة اعتماد حسابك.</p>
+        </div>
+        
+        <div class="mt-4" id="viewIdSection">
+          <!-- سيظهر هنا زر لمعاينة البطاقة المرفوعة حالياً -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="profile.js"></script>
+</body>
+</html>

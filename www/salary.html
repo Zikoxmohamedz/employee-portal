@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>رواتبي - بوابة الموظفين</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+  <div class="navbar">
+    <div class="brand">بوابة الموظفين</div>
+    <div class="nav-actions">
+      <a href="salary.html" class="nav-btn">المرتبات</a>
+      <a href="admin.html" class="nav-btn">الإدارة</a>
+      <button class="nav-btn" id="logoutBtn">خروج</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="hero">
+      <h1>أهلاً يا <span id="userName">...</span> <span id="displayID" class="user-id-badge">...</span></h1>
+      <p>اطلع على تفاصيل مرتبك لكل شهر بعد اعتمادها من الإدارة.</p>
+    </div>
+
+    <div class="card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+        <h2>كشف المرتب</h2>
+        
+        <div style="display: flex; gap: 0.5rem; align-items: center;">
+          <select id="salaryMonth" class="nav-btn" style="background: #f8fafc; color: var(--slate); width: auto;">
+            <option value="1">يناير</option><option value="2">فبراير</option><option value="3">مارس</option>
+            <option value="4">أبريل</option><option value="5">مايو</option><option value="6">يونيو</option>
+            <option value="7">يوليو</option><option value="8">أغسطس</option><option value="9">سبتمبر</option>
+            <option value="10">أكتوبر</option><option value="11">نوفمبر</option><option value="12">ديسمبر</option>
+          </select>
+          <select id="salaryYear" class="nav-btn" style="background: #f8fafc; color: var(--slate); width: auto;">
+            <option value="2025">2025</option>
+            <option value="2026" selected>2026</option>
+            <option value="2027">2027</option>
+          </select>
+          <button class="btn btn-primary" style="width: auto; padding: 0.5rem 1rem;" id="loadSalaryBtn">عرض</button>
+        </div>
+      </div>
+
+      <p class="msg" id="salaryStatus"></p>
+
+      <div class="stat-grid hidden" id="salaryCards">
+        <div class="stat-card">
+          <h3>الشهر المعتمد</h3>
+          <p id="displaySalaryMonth">---</p>
+        </div>
+        <div class="stat-card">
+          <h3>إجمالي المستحق</h3>
+          <p id="grossTotal">0.00</p>
+        </div>
+        <div class="stat-card">
+          <h3>إجمالي الاستقطاعات</h3>
+          <p id="deductionsTotal" style="color: #ef4444;">0.00</p>
+        </div>
+        <div class="stat-card" style="border-color: var(--primary); background: #eff6ff;">
+          <h3>صافي المرتب</h3>
+          <p id="netTotal" style="color: var(--primary);">0.00</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="salary.js"></script>
+</body>
+</html>

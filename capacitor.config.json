@@ -1,0 +1,6 @@
+{
+  "appId": "com.mr_mohamed.portal",
+  "appName": "Employee Portal",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}

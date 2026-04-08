@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة الإدارة - بوابة الموظفين</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+  <div class="navbar">
+    <div class="brand">لوحة الإدارة</div>
+    <div class="nav-actions">
+      <!-- الروابط تضاف تلقائياً عبر common.js -->
+    </div>
+  </div>
+
+  <div class="container mt-4">
+    <div class="hero">
+      <h1>لوحة التحكم والتقارير</h1>
+      <p>أهلاً بك في وحدة التحكم الرئيسية لنظام الموظفين.</p>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="tabs-nav">
+      <button class="tab-btn active" data-tab="approvalsTab">توثيق الحسابات</button>
+      <button class="tab-btn" data-tab="requestsTab">رسائل الموظفين</button>
+      <button class="tab-btn" data-tab="salaryTab">إدارة المرتبات</button>
+      <button class="tab-btn" data-tab="staffTab">قاعدة الموظفين</button>
+    </div>
+
+    <!-- Tab 1: Registration Requests -->
+    <div class="tab-content active" id="approvalsTab">
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+          <h2>طلبات توثيق الحسابات</h2>
+          <button class="btn btn-secondary" id="refreshBtn" style="width: auto;">تحديث القائمة</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>الاسم</th>
+                <th>الكود</th>
+                <th>الموبايل</th>
+                <th>الحالة</th>
+                <th>الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="employeesBody"></tbody>
+          </table>
+        </div>
+        <p class="msg" id="adminStatus"></p>
+      </div>
+    </div>
+
+    <!-- Tab 2: Employee Requests -->
+    <div class="tab-content" id="requestsTab">
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+          <h2>طلبات وشكاوى الموظفين</h2>
+          <span class="tag pending" id="reqCount">0 جديد</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>الموظف</th>
+                <th>الرسالة</th>
+                <th>التاريخ</th>
+                <th>الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="adminRequestsBody"></tbody>
+          </table>
+        </div>
+        <p class="msg" id="adminReqStatus"></p>
+      </div>
+    </div>
+
+    <!-- Tab 3: Salary Management -->
+    <div class="tab-content" id="salaryTab">
+      <div class="card">
+        <h2>رفع كشوف المرتبات (Excel/CSV)</h2>
+        <div class="input-group full mt-4">
+          <label>اختيار ملف الإكسيل</label>
+          <input type="file" id="bulkSalaryFile" accept=".xlsx, .xls, .csv" />
+        </div>
+        <button class="btn btn-primary mt-4 hidden" id="processBulkBtn">معالجة ورفع البيانات</button>
+      </div>
+
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+          <h2>عرض تقارير المرتبات</h2>
+          <div style="display: flex; gap: 0.5rem;">
+            <select id="reportMonth" class="nav-btn" style="padding: 0.5rem; border: 1px solid #ccc;"></select>
+            <select id="reportYear" class="nav-btn" style="padding: 0.5rem; border: 1px solid #ccc;"></select>
+            <button class="btn btn-primary" id="viewReportBtn" style="width: auto; padding: 0.5rem 1rem;">عرض</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>الاسم</th>
+                <th>الكود</th>
+                <th>الإجمالي</th>
+                <th>الخصومات</th>
+                <th>الصافي</th>
+              </tr>
+            </thead>
+            <tbody id="salaryBody"></tbody>
+          </table>
+        </div>
+        <p class="msg" id="salaryStatus"></p>
+      </div>
+    </div>
+
+    <!-- Tab 4: Master Staff Management -->
+    <div class="tab-content" id="staffTab">
+      <div class="card">
+        <h2>إضافة موظف جديد للقاعدة</h2>
+        <div class="grid">
+          <div class="input-group"><label>كود الموظف</label><input type="text" id="masterCode" /></div>
+          <div class="input-group"><label>الاسم بالكامل</label><input type="text" id="masterName" /></div>
+          <div class="input-group"><label>البريد الإلكتروني</label><input type="text" id="masterEmail" /></div>
+          <div class="input-group"><label>رقم الموبايل</label><input type="text" id="masterPhone" /></div>
+          <div class="input-group"><label>الرقم القومي</label><input type="text" id="masterNationalId" /></div>
+        </div>
+        <button class="btn btn-primary mt-4" id="addMasterBtn" style="width: auto;">حفظ الموظف</button>
+        <p class="msg" id="masterStatus"></p>
+      </div>
+
+      <div class="card">
+        <h2>رفع بيانات الموظفين جماعياً</h2>
+        <div class="input-group full mt-4">
+          <label>اختيار ملف البيانات</label>
+          <input type="file" id="bulkStaffFile" accept=".xlsx, .xls, .csv" />
+        </div>
+        <button class="btn btn-primary mt-4 hidden" id="processBulkStaffBtn">بدء الرفع الجماعي</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="module" src="admin.js"></script>
+  <script>
+    // تهيئة القوائم المنسدلة للشهور والسنوات
+    const months = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
+    const monthSelect = document.getElementById("reportMonth");
+    const yearSelect = document.getElementById("reportYear");
+    
+    months.forEach((m, i) => {
+      const opt = document.createElement("option");
+      opt.value = i + 1;
+      opt.textContent = m;
+      if (i === new Date().getMonth()) opt.selected = true;
+      monthSelect.appendChild(opt);
+    });
+
+    const currYear = new Date().getFullYear();
+    for (let y = currYear; y >= currYear - 2; y--) {
+      const opt = document.createElement("option");
+      opt.value = y;
+      opt.textContent = y;
+      yearSelect.appendChild(opt);
+    }
+  </script>
+</body>
+</html>

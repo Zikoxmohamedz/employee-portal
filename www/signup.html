@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>إنشاء حساب جديد - بوابة الموظفين</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="navbar">
+    <div class="brand">بوابة الموظفين</div>
+    <div class="nav-actions">
+      <a href="login.html" class="nav-btn">دخول</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="hero">
+      <h1>إنشاء حساب جديد</h1>
+      <p>أدخل كود الموظف للبدء في تفعيل حسابك.</p>
+    </div>
+
+    <div class="card" style="max-width: 600px; margin: 0 auto;">
+      <!-- Step 1: Lookup -->
+      <div id="step1">
+        <div class="input-group">
+          <label>كود الموظف</label>
+          <input type="text" id="lookupCode" placeholder="مثلاً: 123" />
+        </div>
+        <button class="btn btn-primary mt-4" id="checkCodeBtn">تحقق من الكود</button>
+      </div>
+
+      <!-- Step 2: Form (Initially Hidden) -->
+      <div id="registrationForm" class="hidden">
+        <div class="msg" id="infoBox" style="background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; margin-bottom: 1.5rem;"></div>
+        
+        <div class="grid">
+          <div class="input-group full">
+            <label>الاسم بالكامل</label>
+            <input type="text" id="fullName" placeholder="الاسم رباعي كما في البطاقة" />
+          </div>
+
+          <div class="input-group">
+            <label>رقم الموبايل</label>
+            <input type="text" id="phone" placeholder="01xxxxxxxxx" />
+          </div>
+
+          <div class="input-group">
+            <label>الرقم القومي</label>
+            <input type="text" id="nationalId" placeholder="29xxxxxxxxxxxx" />
+          </div>
+
+          <div class="input-group full">
+            <label>البريد الإلكتروني الشخصي</label>
+            <input type="email" id="email" placeholder="example@gmail.com" />
+          </div>
+
+          <div class="input-group full">
+            <label>كلمة مرور جديدة</label>
+            <input type="password" id="password" placeholder="6 أحرف على الأقل" />
+          </div>
+          <div class="input-group full">
+            <label>صورة البطاقة الشخصية (مطلوبة للتوثيق)</label>
+            <input type="file" id="idCardFile" accept="image/*" />
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+          <button class="btn btn-success mt-4" id="finishSignupBtn">إتمام إنشاء الحساب</button>
+          <button class="btn btn-secondary mt-4" id="backToLookup">رجوع</button>
+        </div>
+      </div>
+
+      <p class="msg text-center" id="signupStatus"></p>
+      <p class="text-muted text-center mt-4">لديك حساب بالفعل؟ <a href="login.html">سجل دخولك هنا</a></p>
+    </div>
+  </div>
+
+  <script type="module" src="signup.js"></script>
+</body>
+</html>

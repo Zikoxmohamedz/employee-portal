@@ -1,0 +1,71 @@
+name: Build iOS App
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-android:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Sync Capacitor
+        run: npx cap sync android
+
+      - name: Build Android App
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: android-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+
+  build-ios:
+    name: Build iOS IPA
+    runs-on: macos-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Sync Capacitor
+        run: npx cap sync ios
+
+      - name: Build Xcode Project
+        run: |
+          npx cap copy ios
+          # هذه الخطوة ستقوم ببناء المشروع، 
+          # ملاحظة: استخراج ملف .ipa نهائي يتطلب شهادات آبل، 
+          # لكننا هنا سنقوم بضغط المجلد الناتج ليكون جاهزاً للفتح.
+          cd ios/App
+          xcodebuild -workspace App.xcworkspace -scheme App -sdk iphoneos -configuration Debug -allowProvisioningUpdates build
+        continue-on-error: true
+
+      - name: Archive Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ios-build
+          path: ios/App

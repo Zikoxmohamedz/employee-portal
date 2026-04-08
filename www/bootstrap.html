@@ -1,0 +1,29 @@
+<!-- bootstrap.html -->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"><title>تهيئة النظام</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container text-center">
+    <div class="card">
+      <h1>تهيئة حساب المدير الأول</h1>
+      <p>استخدم هذه الصفحة لمرة واحدة فقط لترقية حسابك الحالي لمستوى "مدير".</p>
+      <button class="btn btn-primary mt-4" id="btn">ترقية حسابي لمدير (Admin)</button>
+      <p id="out" class="msg"></p>
+      <a href="admin.html" class="nav-btn mt-4">الانتقال للوحة الإدارة</a>
+    </div>
+  </div>
+  <script type="module">
+    import { supabase } from "./config.js";
+    import { getCurrentUser } from "./common.js";
+    document.getElementById("btn").onclick = async () => {
+      const user = await getCurrentUser();
+      if (!user) return alert("سجل دخولك أولاً!");
+      const { error } = await supabase.from("admin_users").upsert({ user_id: user.id });
+      document.getElementById("out").textContent = error ? "خطأ: " + error.message : "تم تفعيل صلاحيات المدير بنجاح!";
+    };
+  </script>
+</body>
+</html>
