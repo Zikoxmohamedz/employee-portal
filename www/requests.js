@@ -1,8 +1,10 @@
 import { supabase } from "./config.js";
 import { requireAuth, logout, updateNavbarVisibility } from "./common.js";
 
+let user;
+
 async function init() {
-  const user = await requireAuth();
+  user = await requireAuth();
   await updateNavbarVisibility(user);
   if (!user) return;
   

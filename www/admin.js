@@ -1,8 +1,10 @@
 import { supabase } from "./config.js";
 import { requireAdmin, logout, updateNavbarVisibility } from "./common.js";
 
+let adminUser;
+
 async function init() {
-  const adminUser = await requireAdmin();
+  adminUser = await requireAdmin();
   await updateNavbarVisibility(adminUser);
   if (!adminUser) return;
 
