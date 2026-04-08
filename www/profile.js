@@ -1,9 +1,16 @@
 import { supabase } from "./config.js";
 import { requireAuth, logout, updateNavbarVisibility } from "./common.js";
 
-const user = await requireAuth();
-await updateNavbarVisibility(user);
-if (!user) throw new Error("Unauthorized");
+async function init() {
+  const user = await requireAuth();
+  await updateNavbarVisibility(user);
+  if (!user) return;
+  
+  // تحميل البروفايل بعد التأكد من الهوية
+  await loadProfile();
+}
+
+init();
 
 // UI Elements
 const fullNameInput = document.getElementById("fullName");

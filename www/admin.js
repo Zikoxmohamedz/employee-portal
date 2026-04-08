@@ -1,9 +1,18 @@
 import { supabase } from "./config.js";
 import { requireAdmin, logout, updateNavbarVisibility } from "./common.js";
 
-const adminUser = await requireAdmin();
-await updateNavbarVisibility(adminUser);
-if (!adminUser) throw new Error("Unauthorized");
+async function init() {
+  const adminUser = await requireAdmin();
+  await updateNavbarVisibility(adminUser);
+  if (!adminUser) return;
+
+  // تحميل البيانات الأولية بعد التأكد من الصلاحية
+  loadProfiles();
+  loadSalaryReport();
+  loadAdminRequests();
+}
+
+init();
 
 // --- UI Elements ---
 const masterStatus = document.getElementById("masterStatus");

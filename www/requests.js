@@ -1,9 +1,16 @@
 import { supabase } from "./config.js";
 import { requireAuth, logout, updateNavbarVisibility } from "./common.js";
 
-const user = await requireAuth();
-await updateNavbarVisibility(user);
-if (!user) throw new Error("Unauthorized");
+async function init() {
+  const user = await requireAuth();
+  await updateNavbarVisibility(user);
+  if (!user) return;
+  
+  // تحميل الطلبات بعد التأكد من الهوية
+  loadRequests();
+}
+
+init();
 
 const messageInput = document.getElementById("requestMessage");
 const sendBtn = document.getElementById("sendRequestBtn");

@@ -1,9 +1,16 @@
 import { supabase } from "./config.js";
 import { requireAuth, logout, salaryMonthName, updateNavbarVisibility } from "./common.js";
 
-const user = await requireAuth();
-await updateNavbarVisibility(user);
-if (!user) throw new Error("Unauthorized");
+async function init() {
+  const user = await requireAuth();
+  await updateNavbarVisibility(user);
+  if (!user) return;
+  
+  // نقوم بتنفيذ التحميل التلقائي بعد التأكد من الهوية
+  loadSalary();
+}
+
+init();
 
 const statusEl = document.getElementById("salaryStatus");
 const salaryCards = document.getElementById("salaryCards");
